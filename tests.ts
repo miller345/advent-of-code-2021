@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.116.0/testing/asserts.ts";
 import { AOCResult, AOCSolver, getExample, getInput } from "./aoc.ts";
-// import day1 from "./01/index.ts";
+import day1 from "./01/index.ts";
 // import day2 from "./02/index.ts";
 // import day3 from "./03/index.ts";
 // import day4 from "./04/index.ts";
@@ -43,7 +43,7 @@ const testDay = (
 };
 
 const tests: [number, AOCSolver, [AOCResult, any?], [AOCResult, any?]?][] = [
-  // [1, day1, [{ part1: 1676, part2: 1706 }], [{ part1: 7, part2: 5 }]],
+  [1, day1, [{ part1: 1676, part2: 1706 }], [{ part1: 7, part2: 5 }]],
   // [2, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [3, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [4, day14, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
