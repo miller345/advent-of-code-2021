@@ -1,7 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.116.0/testing/asserts.ts";
 import { AOCResult, AOCSolver, getExample, getInput } from "./aoc.ts";
 import day1 from "./01/index.ts";
-// import day2 from "./02/index.ts";
+import day2 from "./02/index.ts";
 // import day3 from "./03/index.ts";
 // import day4 from "./04/index.ts";
 // import day5 from "./05/index.ts";
@@ -44,17 +44,22 @@ const testDay = (
 
 const tests: [number, AOCSolver, [AOCResult, any?], [AOCResult, any?]?][] = [
   [1, day1, [{ part1: 1676, part2: 1706 }], [{ part1: 7, part2: 5 }]],
-  // [2, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [3, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [4, day14, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [5, day15, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [6, day16, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [7, day17, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [8, day18, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [9, day19, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [10, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [11, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
-  // [12, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  [
+    2,
+    day2,
+    [{ part1: 1383564, part2: 1488311643 }],
+    [{ part1: 150, part2: 900 }],
+  ],
+  // [3, day3, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [4, day4, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [5, day5, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [6, day6, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [7, day7, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [8, day8, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [9, day9, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [10, day10, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [11, day11, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  // [12, day12, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [13, day13, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [14, day14, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [15, day15, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],

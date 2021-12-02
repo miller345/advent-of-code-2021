@@ -2,8 +2,8 @@ allow:
  - read
 
 scripts:
-  start: deno run ./01/index.ts
+  start: deno run ./02/index.ts
   test: deno test ./tests.ts
-  test-day: deno test ./tests.ts --filter "/Day 1/"
+  test-day: deno test ./tests.ts --filter "/Day 2/"
   test-examples: deno test ./tests.ts --filter "/(example)/"
   format: deno fmt
