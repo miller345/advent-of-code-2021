@@ -16,15 +16,18 @@ const getPart1Values = (instructions: Instruction[]) =>
     horizontal: number;
   }>(
     ({ depth, horizontal }, [direction, value]) => {
-      const depthChange =
-        direction === "down" ? value : direction === "up" ? -value : 0;
+      const depthChange = direction === "down"
+        ? value
+        : direction === "up"
+        ? -value
+        : 0;
       const horizontalChange = direction === "forward" ? value : 0;
       return {
         depth: depth + depthChange,
         horizontal: horizontal + horizontalChange,
       };
     },
-    { depth: 0, horizontal: 0 }
+    { depth: 0, horizontal: 0 },
   );
 
 const getPart2Values = (instructions: Instruction[]) =>
@@ -34,8 +37,11 @@ const getPart2Values = (instructions: Instruction[]) =>
     aim: number;
   }>(
     ({ depth, horizontal, aim }, [direction, value]) => {
-      const aimChange =
-        direction === "down" ? value : direction === "up" ? -value : 0;
+      const aimChange = direction === "down"
+        ? value
+        : direction === "up"
+        ? -value
+        : 0;
       const depthChange = direction === "forward" ? aim * value : 0;
       const horizontalChange = direction === "forward" ? value : 0;
       return {
@@ -44,7 +50,7 @@ const getPart2Values = (instructions: Instruction[]) =>
         aim: aim + aimChange,
       };
     },
-    { depth: 0, horizontal: 0, aim: 0 }
+    { depth: 0, horizontal: 0, aim: 0 },
   );
 
 const solve: AOCSolver = (input) => {

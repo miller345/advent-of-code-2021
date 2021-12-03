@@ -19,7 +19,7 @@ const solve: AOCSolver = (input) => {
       const sum = threeValues.reduce((total, value) => total + value, 0);
       return [...summedValues, sum];
     },
-    []
+    [],
   );
   const part2 = countIncreases(summedValues);
   return { part1, part2 };
