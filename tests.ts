@@ -30,7 +30,7 @@ const testDay = (
   day: number,
   solver: AOCSolver,
   input: [AOCResult, any?],
-  example?: [AOCResult, any?]
+  example?: [AOCResult, any?],
 ) => {
   if (example) {
     Deno.test(`Day ${day} (example)`, async () => {
@@ -50,7 +50,7 @@ const tests: [number, AOCSolver, [AOCResult, any?], [AOCResult, any?]?][] = [
     [{ part1: 1383564, part2: 1488311643 }],
     [{ part1: 150, part2: 900 }],
   ],
-  [3, day3, [{ part1: 1458194, part2: 0 }], [{ part1: 198, part2: 0 }]],
+  [3, day3, [{ part1: 1458194, part2: 2829354 }], [{ part1: 198, part2: 230 }]],
   // [4, day4, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [5, day5, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [6, day6, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
