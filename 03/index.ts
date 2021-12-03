@@ -18,12 +18,11 @@ const mostCommonBitAtIndex = (
   return sum >= instructions.length / 2 ? 1 : 0;
 };
 
-const filterForBitsAtIndex = (
+const leastCommonBitAtIndex = (
   instructions: Instruction[],
-  value: Bit,
   index: number,
-) => {
-  return instructions.filter((instruction) => instruction[index] === value);
+): Bit => {
+  return mostCommonBitAtIndex(instructions, index) === 1 ? 0 : 1;
 };
 
 const toDec = (instruction: Instruction) => parseInt(instruction.join(""), 2);
@@ -37,35 +36,21 @@ const getPart1Values = (instructions: Instruction[]) => {
   return { gamma: toDec(gammaBits), epsilon: toDec(epsilonBits) };
 };
 
-const getOxygen = (instructions: Instruction[]) => {
-  let index = 0;
-  let values = instructions;
-  while (values.length > 1) {
-    values = filterForBitsAtIndex(
-      values,
-      mostCommonBitAtIndex(values, index),
-      index,
-    );
-    index++;
-  }
-  return toDec(values[0]);
-};
-
-const getCO2 = (instructions: Instruction[]) => {
-  let index = 0;
-  let values = instructions;
-  while (values.length > 1) {
-    values = filterForBitsAtIndex(
-      values,
-      mostCommonBitAtIndex(values, index) === 1 ? 0 : 1, // least common
-      index,
-    );
-    index++;
-  }
-  return toDec(values[0]);
-};
-
 const getPart2Values = (instructions: Instruction[]) => {
+  const getOxygen = (instructions: Instruction[], index = 0): number => {
+    const values = instructions.filter((instruction) =>
+      instruction[index] === mostCommonBitAtIndex(instructions, index)
+    );
+    if (values.length === 1) return toDec(values[0]);
+    return getOxygen(values, index + 1);
+  };
+  const getCO2 = (instructions: Instruction[], index = 0): number => {
+    const values = instructions.filter((instruction) =>
+      instruction[index] === leastCommonBitAtIndex(instructions, index)
+    );
+    if (values.length === 1) return toDec(values[0]);
+    return getCO2(values, index + 1);
+  };
   return { oxygen: getOxygen(instructions), cO2: getCO2(instructions) };
 };
 
