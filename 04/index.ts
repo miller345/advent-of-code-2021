@@ -1,5 +1,4 @@
 import { AOCSolver } from "../aoc.ts";
-import { getExample, getInput } from "../aoc.ts";
 
 type Line = [number, number, number, number, number];
 type Card = [Line, Line, Line, Line, Line];
@@ -28,10 +27,22 @@ const cardIsBingo = (card: Card, numsCalled: number[]) =>
 const playGame = (
   game: Game,
   callCount = 0,
-): { winner: Card; numsCalled: number[] } => {
+): { winner: Card; winnerIndex: number; numsCalled: number[] } => {
   const numsCalled = game.nums.slice(0, callCount + 1);
-  const winner = game.cards.find((card) => cardIsBingo(card, numsCalled));
-  return winner ? { winner, numsCalled } : playGame(game, callCount + 1);
+  const winnerIndex = game.cards.findIndex((card) =>
+    cardIsBingo(card, numsCalled)
+  );
+  return winnerIndex > -1
+    ? { winner: game.cards[winnerIndex], winnerIndex, numsCalled }
+    : playGame(game, callCount + 1);
+};
+
+const playGameToLose = (game: Game): { loser: Card; numsCalled: number[] } => {
+  const { winnerIndex, numsCalled } = playGame(game);
+  const losingCards = game.cards.filter((_, i) => i !== winnerIndex);
+  return losingCards.length === 1
+    ? { loser: losingCards[0], numsCalled }
+    : playGameToLose({ nums: game.nums, cards: losingCards });
 };
 
 const getCardScore = (card: Card, numsCalled: number[]) => {
@@ -44,11 +55,12 @@ const solve: AOCSolver = (input) => {
   const game = parse(input);
   const result = playGame(game);
   const part1 = getCardScore(result.winner, result.numsCalled);
-  const part2 = 0;
+  const { loser, numsCalled } = playGameToLose(game);
+  const part2 = getCardScore(loser, [
+    ...numsCalled,
+    game.nums[numsCalled.length],
+  ]);
   return { part1, part2 };
 };
-
-console.log(solve(await getExample(4)));
-console.log(solve(await getInput(4)));
 
 export default solve;
