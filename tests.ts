@@ -4,7 +4,7 @@ import day1 from "./01/index.ts";
 import day2 from "./02/index.ts";
 import day3 from "./03/index.ts";
 import day4 from "./04/index.ts";
-// import day5 from "./05/index.ts";
+import day5 from "./05/index.ts";
 // import day6 from "./06/index.ts";
 // import day7 from "./07/index.ts";
 // import day8 from "./08/index.ts";
@@ -52,7 +52,7 @@ const tests: [number, AOCSolver, [AOCResult, any?], [AOCResult, any?]?][] = [
   ],
   [3, day3, [{ part1: 1458194, part2: 2829354 }], [{ part1: 198, part2: 230 }]],
   [4, day4, [{ part1: 72770, part2: 13912 }], [{ part1: 4512, part2: 1924 }]],
-  // [5, day5, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
+  [5, day5, [{ part1: 8622, part2: 0 }], [{ part1: 5, part2: 0 }]],
   // [6, day6, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [7, day7, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
   // [8, day8, [{ part1: 0, part2: 0 }], [{ part1: 0, part2: 0 }]],
