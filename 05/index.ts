@@ -1,4 +1,5 @@
 import { AOCSolver } from "../aoc.ts";
+import { getRange } from "../utils.ts";
 // import { getExample, getInput } from "../aoc.ts";
 
 interface Point {
@@ -30,11 +31,6 @@ const normalise = (line: Line): Line => {
   }
   // leftmost first
   return line[0].x < line[1].x ? line : [line[1], line[0]];
-};
-
-const getRange = (from: number, to: number) => {
-  const [low, high] = to > from ? [from, to] : [to, from];
-  return [...Array(high - low + 1).keys()].map((i) => i + low);
 };
 
 const getLineType = ([from, to]: Line): LineType => {
