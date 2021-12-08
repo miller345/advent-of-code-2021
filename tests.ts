@@ -52,7 +52,7 @@ const tests: [number, AOCSolver, [AOCResult, any?], [AOCResult, any?]?][] = [
   ],
   [3, day3, [{ part1: 1458194, part2: 2829354 }], [{ part1: 198, part2: 230 }]],
   [4, day4, [{ part1: 72770, part2: 13912 }], [{ part1: 4512, part2: 1924 }]],
-  [5, day5, [{ part1: 8622, part2: 0 }], [{ part1: 5, part2: 0 }]],
+  [5, day5, [{ part1: 8622, part2: 22037 }], [{ part1: 5, part2: 12 }]],
   [6, day6, [{ part1: 359344, part2: 1629570219571 }], [{
     part1: 5934,
     part2: 26984457539,
