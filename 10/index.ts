@@ -1,67 +1,67 @@
 import { AOCSolver } from "../aoc.ts";
-import {
-  Char,
-  CloseChar,
-  isChar,
-  isCloseChar,
-  isOpenChar,
-  isWrongCloseCharError,
-  Line,
-  OpenChar,
-  ParseLineError,
-} from "./types.ts";
-// import { getExample, getInput } from "../aoc.ts";
 
-const parse = (input: string): Line[] => {
-  return input.split("\n").map((l) =>
+const _openChars = ["(", "[", "{", "<"] as const;
+type OpenChar = typeof _openChars[number];
+function isOpenChar(v: string): v is OpenChar {
+  return _openChars.includes(v as OpenChar);
+}
+
+const _closeChars = [")", "]", "}", ">"] as const;
+type CloseChar = typeof _closeChars[number];
+function isCloseChar(v: string): v is OpenChar {
+  return _closeChars.includes(v as CloseChar);
+}
+
+type Char = OpenChar | CloseChar;
+function isChar(v: string): v is Char {
+  return isOpenChar(v) || isCloseChar(v);
+}
+
+type Line = Char[];
+
+interface WrongCloseCharError {
+  char: CloseChar;
+  expectedChar: CloseChar;
+}
+
+const parse = (input: string): Line[] =>
+  input.split("\n").map((l) =>
     l.split("").map((c) => {
       if (isChar(c)) return c;
       throw Error("parse error");
     })
   );
-};
 
-const _pairs: [OpenChar, CloseChar][] = [
-  ["(", ")"],
-  ["<", ">"],
-  ["[", "]"],
-  ["{", "}"],
-];
 const isPair = (open: OpenChar, close: CloseChar) =>
-  _pairs.map(([o, c]) => o + c).includes(open + close);
-const getCloseChar = (open: OpenChar) => _pairs.find(([o]) => o === open)![1];
+  _openChars.indexOf(open) === _closeChars.indexOf(close);
+const getCloseChar = (open: OpenChar) => _closeChars[_openChars.indexOf(open)];
 
 const parseLine = (
   line: Line,
   openChunks: OpenChar[] = [],
   step = 0,
-): true | ParseLineError => {
-  if (step === line.length) return true; // done
+):
+  | CloseChar[] // missing close chars
+  | WrongCloseCharError => {
+  if (step === line.length) {
+    return [...openChunks].reverse().map((open) => getCloseChar(open));
+  }
   const char: Char = line[step];
   if (isOpenChar(char)) {
     return parseLine(line, [...openChunks, char], step + 1);
   }
   if (isCloseChar(char)) {
-    if (openChunks.length === 0) return { type: "no open chunks", char, step };
+    if (openChunks.length === 0) throw Error("parseLine: no open chunks");
     const open = openChunks[openChunks.length - 1];
     if (!isPair(open, char)) {
-      return {
-        type: "wrong close char",
-        step,
-        char,
-        expectedChar: getCloseChar(open),
-      };
+      return { char, expectedChar: getCloseChar(open) };
     }
     return parseLine(line, openChunks.slice(0, -1), step + 1);
   }
   throw Error("parseLine: invalid char");
 };
 
-const parseLines = (lines: Line[]) => {
-  return lines.map((line) => {
-    return parseLine(line);
-  });
-};
+const parseLines = (lines: Line[]) => lines.map((line) => parseLine(line));
 
 const getScore = (char: CloseChar) => {
   if (char === ")") return 3;
@@ -74,21 +74,34 @@ const getScore = (char: CloseChar) => {
 const getPart1 = (lines: Line[]) =>
   parseLines(lines).reduce(
     (score, res) => {
-      if (res === true) return score;
-      if (isWrongCloseCharError(res)) return getScore(res.char) + score;
-      return score;
+      if (Array.isArray(res)) return score;
+      return getScore(res.char) + score;
     },
     0,
   );
 
+const getScore2 = (chars: CloseChar[]) =>
+  chars.reduce(
+    (score, char) => (score * 5) + [")", "]", "}", ">"].indexOf(char) + 1,
+    0,
+  );
+
+const getPart2 = (lines: Line[]) => {
+  const scores = parseLines(lines).reduce<number[]>(
+    (arr, res) => {
+      if (Array.isArray(res)) return [...arr, getScore2(res)];
+      return arr;
+    },
+    [],
+  ).sort((a, b) => a - b);
+  return scores[(scores.length - 1) / 2];
+};
+
 const solve: AOCSolver = (input) => {
   const lines = parse(input);
   const part1 = getPart1(lines);
-  const part2 = 0;
+  const part2 = getPart2(lines);
   return { part1, part2 };
 };
-
-// console.log(solve(await getExample(10)));
-// console.log(solve(await getInput(10)));
 
 export default solve;
