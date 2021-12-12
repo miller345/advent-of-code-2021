@@ -1,5 +1,4 @@
 import { AOCSolver } from "../aoc.ts";
-// import { getExample, getInput } from "../aoc.ts";
 
 type Line = number[];
 type Grid = Line[];
@@ -78,14 +77,25 @@ const runFor = (
   );
 };
 
+const runUntilSync = (
+  grid: Grid,
+  runCount = 0,
+): number => {
+  const flashCount = getPointsWithValue(grid, 0).length;
+  const totalLength = grid.length * grid[0].length;
+  if (flashCount === totalLength) return runCount;
+  const newGrid = flash(setValues(grid, (v) => v + 1));
+  return runUntilSync(
+    newGrid,
+    runCount + 1,
+  );
+};
+
 const solve: AOCSolver = (input) => {
   const grid = parse(input);
   const part1 = runFor(grid, 100);
-  const part2 = 0;
+  const part2 = runUntilSync(grid);
   return { part1, part2 };
 };
-
-// console.log(solve(await getExample(11)));
-// console.log(solve(await getInput(11)));
 
 export default solve;
