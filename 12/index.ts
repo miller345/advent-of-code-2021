@@ -1,5 +1,4 @@
 import { AOCSolver } from "../aoc.ts";
-// import { getExample, getInput } from "../aoc.ts";
 
 type Connection = [string, string];
 
@@ -19,6 +18,7 @@ const getConnectedCaves = (cave: string, connections: Connection[]): string[] =>
 
 const getPossiblePaths = (
   connections: Connection[],
+  allowDoubleVisit: boolean,
 ): number => {
   let paths: string[][] = [["start"]];
   let count = 0;
@@ -29,11 +29,16 @@ const getPossiblePaths = (
       paths = paths.slice(1);
       count++;
     } else {
+      const smallCaves = currentPath.filter((c) => !isBig(c));
+      const doubleVisit = smallCaves.length !== new Set(smallCaves).size; // already visited a small cave twice
       const possibleCaves = getConnectedCaves(currentCave, connections)
         .filter(
           (cave) => {
+            if (cave === "start") return false; // cant go back to start
             if (isBig(cave)) return true; // can revisit big caves
-            if (currentPath.includes(cave)) return false; // dont revisit small caves
+            if (doubleVisit === true || allowDoubleVisit === false) {
+              if (currentPath.includes(cave)) return false; // dont revisit small caves
+            }
             return true;
           },
         );
@@ -46,12 +51,9 @@ const getPossiblePaths = (
 
 const solve: AOCSolver = (input) => {
   const connections = parse(input);
-  const part1 = getPossiblePaths(connections);
-  const part2 = 0;
+  const part1 = getPossiblePaths(connections, false);
+  const part2 = getPossiblePaths(connections, true);
   return { part1, part2 };
 };
-
-// console.log(solve(await getExample(12)));
-// console.log(solve(await getInput(12)));
 
 export default solve;
