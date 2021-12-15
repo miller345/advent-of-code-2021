@@ -1,6 +1,6 @@
 export interface AOCResult {
-  part1: number;
-  part2: number;
+  part1: number | string;
+  part2: number | string;
 }
 export type AOCSolver = (input: string, args?: any) => AOCResult;
 
